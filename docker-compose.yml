@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  vue-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vue-app-dev
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped
