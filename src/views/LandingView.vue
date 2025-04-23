@@ -20,7 +20,7 @@
                 </v-card-title>
 
                 <v-card-subtitle class="text-center pb-0 mb-6">
-                  Sistema integral de gestión financiera
+                  La herramienta para la gestión de documentos en Detacoop
                 </v-card-subtitle>
               </v-card-item>
 
