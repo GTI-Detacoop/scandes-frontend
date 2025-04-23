@@ -20,6 +20,23 @@ export const useAuthStore = defineStore('auth', () => {
     return account.value.idTokenClaims
   })
 
+  const userInitials = computed(() => {
+    if (userName.value) {
+      const nameParts = userName.value.split(' ');
+      if (nameParts.length >= 2) {
+        return (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase();
+      }
+      return userName.value.substring(0, 2).toUpperCase();
+    }
+
+    if (userEmail.value) {
+      const username = userEmail.value.split('@')[0];
+      return username.substring(0, 2).toUpperCase();
+    }
+
+    return '?';
+  })
+
   const hasRole = computed(() => (role: string) => userRoles.value.includes(role))
 
   async function initialize() {
@@ -173,6 +190,7 @@ export const useAuthStore = defineStore('auth', () => {
     userEmail,
     userId,
     userClaims,
+    userInitials,
     hasRole,
 
     initialize,

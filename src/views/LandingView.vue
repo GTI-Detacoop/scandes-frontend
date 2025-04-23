@@ -27,19 +27,8 @@
               <v-divider class="mb-6"></v-divider>
 
               <v-card-text class="pa-2">
-                <v-btn
-                  size="large"
-                  color="primary"
-                  block
-                  rounded="lg"
-                  elevation="2"
-                  height="56"
-                  class="text-white mb-8 btn-animate"
-                  prepend-icon="mdi-microsoft"
-                  to="/login"
-                >
-                  Iniciar sesión con Microsoft
-                </v-btn>
+
+                <ActiveDirectoryLoginButton />
 
                 <div class="text-center">
                   <p class="text-caption text-medium-emphasis">
@@ -57,6 +46,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import ActiveDirectoryLoginButton from '@/components/ActiveDirectoryLoginButton.vue'
 
 const currentYear = computed(() => new Date().getFullYear())
 </script>
