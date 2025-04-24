@@ -39,9 +39,10 @@ export const requireNoAuth = async (
   const authStore = useAuthStore()
 
   await authStore.initialize()
+  await authStore.handleRedirectCallback()
 
   if (authStore.isAuthenticated) {
-    next({ name: 'home' })
+    next({ name: 'dashboard' })
   } else {
     next()
   }

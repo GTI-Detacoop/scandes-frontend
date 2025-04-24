@@ -13,7 +13,8 @@ const scandesTheme = {
     info: '#2196F3',              // Information blue
     warning: '#FFC107',           // Warning yellow
     error: '#FF5252',             // Error red
-    success: '#4CAF50',           // Success green
+    success: '#4CAF50',
+    dark: '#042e4f',
   },
 }
 

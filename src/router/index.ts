@@ -9,6 +9,13 @@ const router: Router = createRouter({
       path: '/',
       name: 'home',
       component: () => import('../views/LandingView.vue'),
+      meta: { requiresNoAuth: true }
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('../views/DashboardView.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/about',
