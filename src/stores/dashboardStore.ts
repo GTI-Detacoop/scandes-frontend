@@ -27,43 +27,96 @@ export interface MainMenuItem {
 }
 
 export const useDashboardStore = defineStore('dashboard', () => {
-  // Estado
   const selectedMainItem = ref<string>('descuento-planilla')
   const selectedSubItem = ref<string>('evaluacion-credito-id')
   const sidebarExpanded = ref<boolean>(true)
 
-  // Configuración de ítems del menú
+
   const mainMenuItems = ref<MainMenuItem[]>([
     {
       id: 'descuento-planilla',
       title: 'Descuento por Planilla',
-      icon: 'mdi-view-dashboard-outline',
+      icon: 'mdi-cash-multiple',
       subItems: [
         {
           id: 'evaluacion-credito',
           title: 'Evaluación de Crédito',
-          icon: 'mdi-file-document-outline',
+          icon: 'mdi-file-search',
           component: 'EvaluacionCreditoComponent',
           isGroup: true,
           nested: [
             {
               id: 'evaluacion-credito-id',
               title: 'Carnet de Identidad',
-              icon: 'mdi-card-account-details-outline',
+              icon: 'mdi-card-account-details',
               component: 'CarnetIdentidadComponent'
             },
             {
               id: 'evaluacion-credito-ips',
               title: 'IPS',
-              icon: 'mdi-hospital-box-outline',
+              icon: 'mdi-hospital-box',
               component: 'IPSComponent'
+            },
+            {
+              id: 'aclaracion-deuda',
+              title: 'Aclaración de Deuda',
+              icon: 'mdi-file-check',
+              component: 'AclaracionDeudaComponent'
+            },
+            {
+              id: 'certificado-deuda',
+              title: 'Certificado de Deuda',
+              icon: 'mdi-file-document-check',
+              component: 'CertificadoDeudaComponent'
+            },
+            {
+              id: 'informes-comerciales',
+              title: 'Informes Comerciales',
+              icon: 'mdi-chart-box',
+              component: 'InformesComercialesComponent'
+            },
+            {
+              id: 'ley-reemprendimiento',
+              title: 'Ley Reemprendimiento',
+              icon: 'mdi-gavel',
+              component: 'LeyReemprendimientoComponent'
+            },
+            {
+              id: 'registro-deudores',
+              title: 'Registro de Deudores',
+              icon: 'mdi-account-alert',
+              component: 'RegistroDeudoresComponent'
+            },
+            {
+              id: 'preevaluacion-credito',
+              title: 'Preevaluación de Crédito',
+              icon: 'mdi-file-document-edit',
+              component: 'PreevaluacionCreditoComponent'
+            },
+            {
+              id: 'vigencia-cedula',
+              title: 'Vigencia de Cédula',
+              icon: 'mdi-card-account-details-star',
+              component: 'VigenciaCedulaComponent'
+            },
+            {
+              id: 'neitcom',
+              title: 'Neitcom',
+              icon: 'mdi-shield-check',
+              component: 'NeitcomComponent'
+            },
+            {
+              id: 'validacion-prevision',
+              title: 'Validación de Previsión',
+              icon: 'mdi-medical-bag',
+              component: 'ValidacionPrevisionComponent'
             }
           ]
         },
         {
           id: 'obtener-ips',
           title: 'Obtener IPS',
-          icon: 'mdi-cloud-download',
+          icon: 'mdi-download',
           component: 'ObtenerIPSComponent'
         },
         {
@@ -77,12 +130,12 @@ export const useDashboardStore = defineStore('dashboard', () => {
     {
       id: 'otro-producto',
       title: 'Otro Producto',
-      icon: 'mdi-card-account-details-outline',
+      icon: 'mdi-package-variant',
       subItems: [
         {
           id: 'otro-producto-inicio',
           title: 'Inicio',
-          icon: 'mdi-home-outline',
+          icon: 'mdi-home',
           component: 'OtroProductoComponent'
         }
       ]

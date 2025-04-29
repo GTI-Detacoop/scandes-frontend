@@ -1,21 +1,22 @@
 <template>
   <DashboardContentBase
-    title="Carnet de Identidad"
-    description="Evaluación de crédito por Carnet de Identidad"
+    title="Certificado de Deuda"
+    description="Evaluación de crédito por Certificado de Deuda"
   >
     <v-card-text>
       <p class="text-body-1 mb-6">
-        Esta sección permite verificar datos del cliente mediante su carnet de identidad.
+        Esta sección permite verificar el certificado de deuda del cliente.
       </p>
 
       <v-form @submit.prevent="handleSubmit">
         <v-row>
           <v-col cols="12">
-            <div class="text-subtitle-1 mb-2">Documento de Identidad</div>
+            <div class="text-subtitle-1 mb-2">Documento de Certificado de Deuda</div>
             <DropzoneComponent
-              v-model="carnetStore.document"
-              class="mb-4"
-              @update:model-value="carnetStore.setDocument"
+              :model-value="creditAssessmentStore.certificadoDeuda"
+              @update:model-value="handleFileUpdate"
+              accept=".pdf,.jpg,.jpeg,.png"
+              label="Subir documento"
             />
           </v-col>
         </v-row>
@@ -26,13 +27,13 @@
               color="primary"
               type="submit"
               :loading="isSubmitting"
-              :disabled="!carnetStore.document"
+              :disabled="!creditAssessmentStore.certificadoDeuda"
               class="mr-2"
             >
               Verificar
             </v-btn>
             <DownloadComponent
-              :file="carnetStore.document"
+              :file="creditAssessmentStore.certificadoDeuda"
               label="Descargar PDF"
               color="secondary"
               class="ml-2"
@@ -46,25 +47,29 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import DashboardContentBase from './DashboardContentBase.vue'
+import DashboardContentBase from '../DashboardContentBase.vue'
 import DropzoneComponent from '@/components/common/DropzoneComponent.vue'
 import DownloadComponent from '@/components/common/DownloadComponent.vue'
-import { useCarnetStore } from '@/stores/carnetStore'
+import { useCreditAssessmentStore } from '@/stores/creditAssessmentStore'
+import { DocumentType } from '@/types/creditAssessment'
 
-const carnetStore = useCarnetStore()
+const creditAssessmentStore = useCreditAssessmentStore()
 const isSubmitting = ref(false)
 
 const handleSubmit = async () => {
   isSubmitting.value = true
   try {
-    // Aquí iría la lógica para enviar los datos al backend
-    console.log('Datos a enviar:', {
-      document: carnetStore.document
-    })
-    // Simulamos una petición
+    // Simular una petición al backend
     await new Promise(resolve => setTimeout(resolve, 1000))
+    console.log('Documento enviado:', creditAssessmentStore.certificadoDeuda)
+  } catch (error) {
+    console.error('Error al enviar el documento:', error)
   } finally {
     isSubmitting.value = false
   }
+}
+
+const handleFileUpdate = (file: File | undefined) => {
+  creditAssessmentStore.setDocument(DocumentType.CERTIFICADO_DEUDA, file)
 }
 </script>
