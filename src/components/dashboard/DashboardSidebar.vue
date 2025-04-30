@@ -21,7 +21,7 @@
       <template v-for="item in dashboardStore.mainMenuItems" :key="item.id">
         <v-list-group
           v-if="item.subItems.length > 0"
-          :value="item.id"
+          :value="expanded ? item.id : null"
           class="mb-1 mx-2 sidebar-item"
           active-class="sidebar-item-active"
         >
@@ -44,7 +44,7 @@
             :value="subItem.id"
             :active="dashboardStore.selectedSubItem === subItem.id"
             @click="setSubItemWithParent(subItem.id, item.id)"
-            class="ms-2 sidebar-item"
+            class="sidebar-sub-item"
             active-class="sidebar-item-active"
           />
         </v-list-group>
@@ -111,6 +111,18 @@ function setSubItemWithParent(subItemId: MenuId, parentId: MenuId) {
 }
 
 :deep(.v-list-group__items) {
-  padding-left: 8px !important;
+  padding-left: 1px !important;
+}
+
+:deep(.v-list-item__prepend) {
+  margin-right: 4px !important;
+}
+
+:deep(.v-list-item) {
+  padding-inline-start: 4px !important;
+}
+
+:deep(.sidebar-sub-item) {
+  padding-inline-start: 16px !important;
 }
 </style>
