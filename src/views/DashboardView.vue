@@ -7,10 +7,6 @@
         v-model:expanded="dashboardStore.sidebarExpanded"
       />
 
-      <DashboardSubSidebar
-        :visible="dashboardStore.sidebarExpanded"
-      />
-
       <v-main class="main-background">
         <v-container fluid class="pa-6">
           <DashboardContent />
@@ -24,15 +20,12 @@
 import { onMounted } from 'vue'
 import { useDashboardStore } from '@/stores/dashboardStore'
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar.vue'
-import DashboardSubSidebar from '@/components/dashboard/DashboardSubSidebar.vue'
 import DashboardNavbar from '@/components/dashboard/DashboardNavbar.vue'
 import DashboardContent from '@/components/dashboard/DashboardContent.vue'
 
 const dashboardStore = useDashboardStore()
 
-// Inicializar el dashboard
 onMounted(() => {
-  // Asegurarse de que haya un item seleccionado al inicio
   if (!dashboardStore.currentSubItem) {
     dashboardStore.setMainItem('descuento-planilla')
   }

@@ -3,7 +3,6 @@ import { ref, computed } from 'vue'
 import { DocumentType, type DocumentMap } from '@/types/creditAssessment'
 
 export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
-  // Documentos para cada sección usando un diccionario
   const documents = ref<DocumentMap>({
     [DocumentType.CARNET_IDENTIDAD]: undefined,
     [DocumentType.IPS]: undefined,
@@ -18,24 +17,20 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
     [DocumentType.VALIDACION_PREVISION]: undefined
   })
 
-  // Función para establecer el documento según la sección
   function setDocument(type: DocumentType, file: File | undefined) {
     documents.value[type] = file
   }
 
-  // Función para obtener el documento de una sección
   function getDocument(type: DocumentType): File | undefined {
     return documents.value[type]
   }
 
-  // Función para limpiar todos los documentos
   function clearAllDocuments() {
     Object.keys(documents.value).forEach(key => {
       documents.value[key as DocumentType] = undefined
     })
   }
 
-  // Getters para cada tipo de documento
   const carnetIdentidad = computed(() => documents.value[DocumentType.CARNET_IDENTIDAD])
   const ips = computed(() => documents.value[DocumentType.IPS])
   const aclaracionDeuda = computed(() => documents.value[DocumentType.ACLARACION_DEUDA])
@@ -49,7 +44,7 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
   const validacionPrevision = computed(() => documents.value[DocumentType.VALIDACION_PREVISION])
 
   return {
-    // Estado
+    // States
     documents,
 
     // Getters
@@ -65,7 +60,7 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
     neitcom,
     validacionPrevision,
 
-    // Acciones
+    // Actions
     setDocument,
     getDocument,
     clearAllDocuments
