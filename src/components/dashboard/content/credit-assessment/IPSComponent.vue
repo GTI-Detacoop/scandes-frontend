@@ -65,7 +65,7 @@ const handleSubmit = async () => {
   try {
     // Simular una petición al backend
     await new Promise(resolve => setTimeout(resolve, 1000))
-    console.log('Documento enviado:', creditAssessmentStore.ips)
+    console.info('Documento enviado:', creditAssessmentStore.ips)
   } catch (error) {
     console.error('Error al enviar el documento:', error)
   } finally {

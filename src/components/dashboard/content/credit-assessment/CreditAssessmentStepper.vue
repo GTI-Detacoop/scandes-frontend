@@ -91,6 +91,7 @@ import LeyReemprendimientoComponent from './LeyReemprendimientoComponent.vue'
 import RegistroDeudoresComponent from './RegistroDeudoresComponent.vue'
 import ValidacionPrevisionComponent from './ValidacionPrevisionComponent.vue'
 import NeitcomComponent from './NeitcomComponent.vue'
+import type { MenuId } from '@/types/menu'
 
 const dashboardStore = useDashboardStore()
 const currentStep = ref(1)
@@ -155,7 +156,7 @@ watch(() => dashboardStore.selectedSubItem, (newSubItem) => {
 watch(currentStep, (newStep) => {
   const step = steps[newStep - 1]
   if (step) {
-    dashboardStore.setSubItem(step.id)
+    dashboardStore.setSubItem(step.id as MenuId)
   }
 })
 </script>
