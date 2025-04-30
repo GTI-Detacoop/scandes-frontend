@@ -22,12 +22,13 @@ import { useDashboardStore } from '@/stores/dashboardStore'
 import DashboardSidebar from '@/components/dashboard/DashboardSidebar.vue'
 import DashboardNavbar from '@/components/dashboard/DashboardNavbar.vue'
 import DashboardContent from '@/components/dashboard/DashboardContent.vue'
+import { MenuId } from '@/types/menu'
 
 const dashboardStore = useDashboardStore()
 
 onMounted(() => {
   if (!dashboardStore.currentSubItem) {
-    dashboardStore.setMainItem('descuento-planilla')
+    dashboardStore.setMainItem(MenuId.DESCUENTO_PLANILLA)
   }
 })
 </script>
