@@ -1,6 +1,7 @@
 <template>
   <div class="credit-assessment-stepper">
-    <!-- Stepper Header con múltiples líneas -->
+    <DownloadDocumentsButton />
+
     <v-card class="stepper-header mb-4">
       <v-row class="pa-2">
         <v-col
@@ -92,6 +93,7 @@ import LeyReemprendimientoComponent from './LeyReemprendimientoComponent.vue'
 import RegistroDeudoresComponent from './RegistroDeudoresComponent.vue'
 import ValidacionPrevisionComponent from './ValidacionPrevisionComponent.vue'
 import NeitcomComponent from './NeitcomComponent.vue'
+import DownloadDocumentsButton from './DownloadDocumentsButton.vue'
 import { MenuId, MenuTitle } from '@/types/menu'
 import { DocumentType } from '@/types/creditAssessment'
 
