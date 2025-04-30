@@ -13,7 +13,6 @@
 
       <v-main class="main-background">
         <v-container fluid class="pa-6">
-          <h1 class="text-h4 mb-4 text-dark">{{ dashboardStore.currentTitle}}</h1>
           <DashboardContent />
         </v-container>
       </v-main>
