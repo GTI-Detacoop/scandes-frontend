@@ -80,6 +80,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useDashboardStore } from '@/stores/dashboardStore'
+import { useCreditAssessmentStore } from '@/stores/creditAssessmentStore'
 import CarnetIdentidadComponent from './CarnetIdentidadComponent.vue'
 import IPSComponent from './IPSComponent.vue'
 import AclaracionDeudaComponent from './AclaracionDeudaComponent.vue'
@@ -91,60 +92,57 @@ import LeyReemprendimientoComponent from './LeyReemprendimientoComponent.vue'
 import RegistroDeudoresComponent from './RegistroDeudoresComponent.vue'
 import ValidacionPrevisionComponent from './ValidacionPrevisionComponent.vue'
 import NeitcomComponent from './NeitcomComponent.vue'
-import type { MenuId } from '@/types/menu'
+import { MenuId, MenuTitle } from '@/types/menu'
+import { DocumentType } from '@/types/creditAssessment'
 
 const dashboardStore = useDashboardStore()
+const creditAssessmentStore = useCreditAssessmentStore()
 const currentStep = ref(1)
 
-// Definir los pasos del stepper
 const steps = [
-  { id: 'evaluacion-credito-id', title: 'Carnet de Identidad', icon: 'mdi-card-account-details', component: CarnetIdentidadComponent },
-  { id: 'evaluacion-credito-ips', title: 'IPS', icon: 'mdi-hospital-box', component: IPSComponent },
-  { id: 'aclaracion-deuda', title: 'Aclaración de Deuda', icon: 'mdi-file-check', component: AclaracionDeudaComponent },
-  { id: 'certificado-deuda', title: 'Certificado de Deuda', icon: 'mdi-file-document-check', component: CertificadoDeudaComponent },
-  { id: 'informes-comerciales', title: 'Informes Comerciales', icon: 'mdi-chart-box', component: InformesComercialesComponent },
-  { id: 'ley-reemprendimiento', title: 'Ley Reemprendimiento', icon: 'mdi-gavel', component: LeyReemprendimientoComponent },
-  { id: 'registro-deudores', title: 'Registro de Deudores', icon: 'mdi-account-alert', component: RegistroDeudoresComponent },
-  { id: 'preevaluacion-credito', title: 'Pre-evaluación', icon: 'mdi-file-document-edit', component: PreevaluacionCreditoComponent },
-  { id: 'vigencia-cedula', title: 'Vigencia Cédula', icon: 'mdi-card-account-details-outline', component: VigenciaCedulaComponent },
-  { id: 'neitcom', title: 'NEITCOM', icon: 'mdi-database-search', component: NeitcomComponent },
-  { id: 'validacion-prevision', title: 'Validación Previsión', icon: 'mdi-shield-check', component: ValidacionPrevisionComponent }
+  { id: MenuId.CARNET_IDENTIDAD , title: MenuTitle.CARNET_IDENTIDAD, icon: 'mdi-card-account-details', component: CarnetIdentidadComponent, documentType: DocumentType.CARNET_IDENTIDAD },
+  { id: MenuId.IPS, title: MenuTitle.IPS, icon: 'mdi-hospital-box', component: IPSComponent, documentType: DocumentType.IPS },
+  { id: MenuId.ACLARACION_DEUDA, title: MenuTitle.ACLARACION_DEUDA, icon: 'mdi-file-check', component: AclaracionDeudaComponent, documentType: DocumentType.ACLARACION_DEUDA },
+  { id: MenuId.CERTIFICADO_DEUDA, title: MenuTitle.CERTIFICADO_DEUDA, icon: 'mdi-file-document-check', component: CertificadoDeudaComponent, documentType: DocumentType.CERTIFICADO_DEUDA },
+  { id: MenuId.INFORMES_COMERCIALES, title: MenuTitle.INFORMES_COMERCIALES, icon: 'mdi-chart-box', component: InformesComercialesComponent, documentType: DocumentType.INFORMES_COMERCIALES },
+  { id: MenuId.LEY_REEMPENDIMIENTO, title: MenuTitle.LEY_REEMPENDIMIENTO, icon: 'mdi-gavel', component: LeyReemprendimientoComponent, documentType: DocumentType.LEY_REEMPENDIMIENTO },
+  { id: MenuId.REGISTRO_DEUDORES, title:  MenuTitle.REGISTRO_DEUDORES, icon: 'mdi-account-alert', component: RegistroDeudoresComponent, documentType: DocumentType.REGISTRO_DEUDORES },
+  { id: MenuId.PREEVALUACION_CREDITO, title: MenuTitle.PREEVALUACION_CREDITO, icon: 'mdi-file-document-edit', component: PreevaluacionCreditoComponent, documentType: DocumentType.PREEVALUACION_CREDITO },
+  { id: MenuId.VIGENCIA_CEDULA, title: MenuTitle.VIGENCIA_CEDULA, icon: 'mdi-card-account-details-outline', component: VigenciaCedulaComponent, documentType: DocumentType.VIGENCIA_CEDULA },
+  { id: MenuId.NEITCOM, title: MenuTitle.NEITCOM, icon: 'mdi-database-search', component: NeitcomComponent, documentType: DocumentType.NEITCOM },
+  { id: MenuId.VALIDACION_PREVISION, title: MenuTitle.VALIDACION_PREVISION, icon: 'mdi-shield-check', component: ValidacionPrevisionComponent, documentType: DocumentType.VALIDACION_PREVISION }
 ]
 
-// Función para verificar si un paso está completado
 const isStepCompleted = (step: number) => {
-  return step < currentStep.value
+  const stepData = steps[step - 1]
+  if (!stepData) return false
+  return !!creditAssessmentStore.getDocument(stepData.documentType)
 }
 
-// Función para obtener el color del icono
 const getIconColor = (step: number) => {
   if (step === currentStep.value) return 'primary'
-  if (step < currentStep.value) return 'success'
+  if (isStepCompleted(step)) return 'success'
   return undefined
 }
 
-// Función para ir a un paso específico
 const goToStep = (step: number) => {
   if (step >= 1 && step <= steps.length) {
     currentStep.value = step
   }
 }
 
-// Función para ir al paso anterior
 const goToPreviousStep = () => {
   if (currentStep.value > 1) {
     currentStep.value--
   }
 }
 
-// Función para ir al siguiente paso
 const goToNextStep = () => {
   if (currentStep.value < steps.length) {
     currentStep.value++
   }
 }
 
-// Sincronizar con la selección del subitem
 watch(() => dashboardStore.selectedSubItem, (newSubItem) => {
   const stepIndex = steps.findIndex(step => step.id === newSubItem)
   if (stepIndex !== -1) {
@@ -152,7 +150,6 @@ watch(() => dashboardStore.selectedSubItem, (newSubItem) => {
   }
 })
 
-// Actualizar el subitem seleccionado cuando cambia el paso
 watch(currentStep, (newStep) => {
   const step = steps[newStep - 1]
   if (step) {
