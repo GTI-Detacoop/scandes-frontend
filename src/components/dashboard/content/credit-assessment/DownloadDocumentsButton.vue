@@ -28,7 +28,6 @@ import { combineFilesIntoPDF, downloadPDF } from '@/utils/pdfUtils'
 const creditAssessmentStore = useCreditAssessmentStore()
 const showWarningDialog = ref(false)
 
-const availableDocs = creditAssessmentStore.availableDocs
 
 
 const showDownloadDialog = () => {
@@ -44,11 +43,11 @@ const downloadDocuments = async () => {
 
   try {
 
-    if (availableDocs.length === 0) {
+    if (creditAssessmentStore.availableDocs.length === 0) {
       throw new Error('No hay documentos disponibles para descargar')
     }
 
-    const combinedPDF = await combineFilesIntoPDF(availableDocs)
+    const combinedPDF = await combineFilesIntoPDF(creditAssessmentStore.availableDocs)
 
     downloadPDF(combinedPDF, 'documentos-evaluacion-credito.pdf')
   } catch (error) {
