@@ -82,38 +82,13 @@
 import { ref, watch } from 'vue'
 import { useDashboardStore } from '@/stores/dashboardStore'
 import { useCreditAssessmentStore } from '@/stores/creditAssessmentStore'
-import CarnetIdentidadComponent from './CarnetIdentidadComponent.vue'
-import IPSComponent from './IPSComponent.vue'
-import AclaracionDeudaComponent from './AclaracionDeudaComponent.vue'
-import CertificadoDeudaComponent from './CertificadoDeudaComponent.vue'
-import InformesComercialesComponent from './InformesComercialesComponent.vue'
-import VigenciaCedulaComponent from './VigenciaCedulaComponent.vue'
-import PreevaluacionCreditoComponent from './PreevaluacionCreditoComponent.vue'
-import LeyReemprendimientoComponent from './LeyReemprendimientoComponent.vue'
-import RegistroDeudoresComponent from './RegistroDeudoresComponent.vue'
-import ValidacionPrevisionComponent from './ValidacionPrevisionComponent.vue'
-import NeitcomComponent from './NeitcomComponent.vue'
 import DownloadDocumentsButton from './DownloadDocumentsButton.vue'
-import { MenuId, MenuTitle } from '@/types/menu'
-import { DocumentType } from '@/types/creditAssessment'
+import { MenuId } from '@/types/menu'
 
 const dashboardStore = useDashboardStore()
 const creditAssessmentStore = useCreditAssessmentStore()
+const steps = creditAssessmentStore.steps
 const currentStep = ref(1)
-
-const steps = [
-  { id: MenuId.CARNET_IDENTIDAD , title: MenuTitle.CARNET_IDENTIDAD, icon: 'mdi-card-account-details', component: CarnetIdentidadComponent, documentType: DocumentType.CARNET_IDENTIDAD },
-  { id: MenuId.IPS, title: MenuTitle.IPS, icon: 'mdi-hospital-box', component: IPSComponent, documentType: DocumentType.IPS },
-  { id: MenuId.ACLARACION_DEUDA, title: MenuTitle.ACLARACION_DEUDA, icon: 'mdi-file-check', component: AclaracionDeudaComponent, documentType: DocumentType.ACLARACION_DEUDA },
-  { id: MenuId.CERTIFICADO_DEUDA, title: MenuTitle.CERTIFICADO_DEUDA, icon: 'mdi-file-document-check', component: CertificadoDeudaComponent, documentType: DocumentType.CERTIFICADO_DEUDA },
-  { id: MenuId.INFORMES_COMERCIALES, title: MenuTitle.INFORMES_COMERCIALES, icon: 'mdi-chart-box', component: InformesComercialesComponent, documentType: DocumentType.INFORMES_COMERCIALES },
-  { id: MenuId.LEY_REEMPENDIMIENTO, title: MenuTitle.LEY_REEMPENDIMIENTO, icon: 'mdi-gavel', component: LeyReemprendimientoComponent, documentType: DocumentType.LEY_REEMPENDIMIENTO },
-  { id: MenuId.REGISTRO_DEUDORES, title:  MenuTitle.REGISTRO_DEUDORES, icon: 'mdi-account-alert', component: RegistroDeudoresComponent, documentType: DocumentType.REGISTRO_DEUDORES },
-  { id: MenuId.PREEVALUACION_CREDITO, title: MenuTitle.PREEVALUACION_CREDITO, icon: 'mdi-file-document-edit', component: PreevaluacionCreditoComponent, documentType: DocumentType.PREEVALUACION_CREDITO },
-  { id: MenuId.VIGENCIA_CEDULA, title: MenuTitle.VIGENCIA_CEDULA, icon: 'mdi-card-account-details-outline', component: VigenciaCedulaComponent, documentType: DocumentType.VIGENCIA_CEDULA },
-  { id: MenuId.NEITCOM, title: MenuTitle.NEITCOM, icon: 'mdi-database-search', component: NeitcomComponent, documentType: DocumentType.NEITCOM },
-  { id: MenuId.VALIDACION_PREVISION, title: MenuTitle.VALIDACION_PREVISION, icon: 'mdi-shield-check', component: ValidacionPrevisionComponent, documentType: DocumentType.VALIDACION_PREVISION }
-]
 
 const isStepCompleted = (step: number) => {
   const stepData = steps[step - 1]
