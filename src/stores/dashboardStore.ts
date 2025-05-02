@@ -1,89 +1,122 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
-
-// Interfaces para tipado
-export interface NestedMenuItem {
-  id: string
-  title: string
-  icon: string
-  component: string
-}
-
-export interface SubMenuItem {
-  id: string
-  title: string
-  icon: string
-  component: string
-  nested?: NestedMenuItem[]
-  isGroup?: boolean
-}
-
-export interface MainMenuItem {
-  id: string
-  title: string
-  icon: string
-  component?: string
-  subItems: SubMenuItem[]
-}
+import { ref, computed, markRaw } from 'vue'
+import { MenuTitle, MenuId, type MainMenuItem } from '../types/menu'
+import ObtenerIPSComponent from '@/components/dashboard/content/ObtenerIPSComponent.vue'
+import CreditAssessmentComponent from '@/components/dashboard/content/CreditAssesmentComponent.vue'
+import HistorialComponent from '@/components/dashboard/content/HistorialComponent.vue'
+import OtroProductoComponent from '@/components/dashboard/content/OtroProductoComponent.vue'
 
 export const useDashboardStore = defineStore('dashboard', () => {
-  // Estado
-  const selectedMainItem = ref<string>('descuento-planilla')
-  const selectedSubItem = ref<string>('evaluacion-credito-id')
+  const selectedMainItem = ref<MenuId>(MenuId.DESCUENTO_PLANILLA)
+  const selectedSubItem = ref<MenuId>(MenuId.CARNET_IDENTIDAD)
   const sidebarExpanded = ref<boolean>(true)
 
-  // Configuración de ítems del menú
+
   const mainMenuItems = ref<MainMenuItem[]>([
     {
-      id: 'descuento-planilla',
-      title: 'Descuento por Planilla',
-      icon: 'mdi-view-dashboard-outline',
+      id: MenuId.DESCUENTO_PLANILLA,
+      title: MenuTitle.DESCUENTO_PLANILLA,
+      icon: 'mdi-cash-multiple',
       subItems: [
         {
-          id: 'evaluacion-credito',
-          title: 'Evaluación de Crédito',
-          icon: 'mdi-file-document-outline',
-          component: 'EvaluacionCreditoComponent',
+          id: MenuId.EVALUACION_CREDITO,
+          title: MenuTitle.EVALUACION_CREDITO,
+          icon: 'mdi-file-search',
+          component: markRaw(CreditAssessmentComponent),
           isGroup: true,
           nested: [
             {
-              id: 'evaluacion-credito-id',
-              title: 'Carnet de Identidad',
-              icon: 'mdi-card-account-details-outline',
-              component: 'CarnetIdentidadComponent'
+              id: MenuId.CARNET_IDENTIDAD,
+              title: MenuTitle.CARNET_IDENTIDAD,
+              icon: 'mdi-card-account-details',
+              component: markRaw(CreditAssessmentComponent)
             },
             {
-              id: 'evaluacion-credito-ips',
-              title: 'IPS',
-              icon: 'mdi-hospital-box-outline',
-              component: 'IPSComponent'
+              id: MenuId.IPS,
+              title: MenuTitle.IPS,
+              icon: 'mdi-hospital-box',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.ACLARACION_DEUDA,
+              title: MenuTitle.ACLARACION_DEUDA,
+              icon: 'mdi-file-check',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.CERTIFICADO_DEUDA,
+              title: MenuTitle.CERTIFICADO_DEUDA,
+              icon: 'mdi-file-document-check',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.INFORMES_COMERCIALES,
+              title: MenuTitle.INFORMES_COMERCIALES,
+              icon: 'mdi-chart-box',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.LEY_REEMPENDIMIENTO,
+              title: MenuTitle.LEY_REEMPENDIMIENTO,
+              icon: 'mdi-gavel',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.REGISTRO_DEUDORES,
+              title: MenuTitle.REGISTRO_DEUDORES,
+              icon: 'mdi-account-alert',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.PREEVALUACION_CREDITO,
+              title: MenuTitle.PREEVALUACION_CREDITO,
+              icon: 'mdi-file-document-edit',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.VIGENCIA_CEDULA,
+              title: MenuTitle.VIGENCIA_CEDULA,
+              icon: 'mdi-card-account-details-star',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.NEITCOM,
+              title: MenuTitle.NEITCOM,
+              icon: 'mdi-shield-check',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.VALIDACION_PREVISION,
+              title: MenuTitle.VALIDACION_PREVISION,
+              icon: 'mdi-medical-bag',
+              component: markRaw(CreditAssessmentComponent)
             }
           ]
         },
         {
-          id: 'obtener-ips',
-          title: 'Obtener IPS',
-          icon: 'mdi-cloud-download',
-          component: 'ObtenerIPSComponent'
+          id: MenuId.OBTENER_IPS,
+          title: MenuTitle.OBTENER_IPS,
+          icon: 'mdi-download',
+          component: markRaw(ObtenerIPSComponent)
         },
         {
-          id: 'historial',
-          title: 'Historial',
+          id: MenuId.HISTORIAL,
+          title: MenuTitle.HISTORIAL,
           icon: 'mdi-history',
-          component: 'HistorialComponent'
+          component: markRaw(HistorialComponent)
         }
       ]
     },
     {
-      id: 'otro-producto',
-      title: 'Otro Producto',
-      icon: 'mdi-card-account-details-outline',
+      id: MenuId.OTRO_PRODUCTO,
+      title: MenuTitle.OTRO_PRODUCTO,
+      icon: 'mdi-package-variant',
       subItems: [
         {
-          id: 'otro-producto-inicio',
-          title: 'Inicio',
-          icon: 'mdi-home-outline',
-          component: 'OtroProductoComponent'
+          id: MenuId.INICIO,
+          title: MenuTitle.INICIO,
+          icon: 'mdi-home',
+          component: markRaw(OtroProductoComponent)
         }
       ]
     }
@@ -99,10 +132,8 @@ export const useDashboardStore = defineStore('dashboard', () => {
   })
 
   const currentSubItem = computed(() => {
-    // Buscar primero en los ítems directos
     let found = currentSubItems.value.find(item => item.id === selectedSubItem.value)
 
-    // Si no se encuentra, buscar en los ítems anidados
     if (!found) {
       for (const subItem of currentSubItems.value) {
         if (subItem.nested) {
@@ -115,7 +146,6 @@ export const useDashboardStore = defineStore('dashboard', () => {
     return found
   })
 
-  // Obtener un grupo padre para un item anidado
   const getParentGroup = computed(() => {
     for (const subItem of currentSubItems.value) {
       if (subItem.nested && subItem.nested.some(nestedItem => nestedItem.id === selectedSubItem.value)) {
@@ -143,23 +173,11 @@ export const useDashboardStore = defineStore('dashboard', () => {
     return null
   })
 
-  // Acciones
-  function setMainItem(itemId: string) {
+  function setMainItem(itemId: MenuId) {
     selectedMainItem.value = itemId
-
-    // Seleccionar automáticamente el primer subitem disponible
-    const mainItem = mainMenuItems.value.find(item => item.id === itemId)
-    if (mainItem && mainItem.subItems.length > 0) {
-      const firstSubItem = mainItem.subItems[0]
-      if (firstSubItem.isGroup && firstSubItem.nested && firstSubItem.nested.length > 0) {
-        selectedSubItem.value = firstSubItem.nested[0].id
-      } else {
-        selectedSubItem.value = firstSubItem.id
-      }
-    }
   }
 
-  function setSubItem(itemId: string) {
+  function setSubItem(itemId: MenuId) {
     selectedSubItem.value = itemId
   }
 
@@ -168,7 +186,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
   }
 
   return {
-    // Estado
+    // States
     selectedMainItem,
     selectedSubItem,
     sidebarExpanded,
