@@ -59,9 +59,8 @@ const isSubmitting = ref(false)
 const handleSubmit = async () => {
   isSubmitting.value = true
   try {
-    // Simular una petición al backend
     await new Promise(resolve => setTimeout(resolve, 1000))
-    console.log('Documento enviado:', creditAssessmentStore.neitcom)
+    console.info('Documento enviado:', creditAssessmentStore.neitcom)
   } catch (error) {
     console.error('Error al enviar el documento:', error)
   } finally {

@@ -2,7 +2,7 @@
   <v-navigation-drawer
     permanent
     :rail="!expanded"
-    width="240"
+    width="260"
     class="sidebar-custom elevation-1"
     @update:rail="$emit('update:expanded', !$event)"
   >
@@ -18,18 +18,49 @@
     <v-divider class="my-2 border-opacity-25"></v-divider>
 
     <v-list nav density="compact">
-      <v-list-item
-        v-for="item in dashboardStore.mainMenuItems"
-        :key="item.id"
-        :value="item.id"
-        :title="expanded ? item.title : ''"
-        :prepend-icon="item.icon"
-        :active="dashboardStore.selectedMainItem === item.id"
-        @click="dashboardStore.setMainItem(item.id)"
-        rounded="lg"
-        class="mb-1 mx-2 sidebar-item"
-        active-class="sidebar-item-active"
-      />
+      <template v-for="item in dashboardStore.mainMenuItems" :key="item.id">
+        <v-list-group
+          v-if="item.subItems.length > 0"
+          :value="expanded ? item.id : null"
+          class="mb-1 mx-2 sidebar-item"
+          active-class="sidebar-item-active"
+        >
+          <template v-slot:activator="{ props }">
+            <v-list-item
+              v-bind="props"
+              :title="expanded ? item.title : ''"
+              :prepend-icon="item.icon"
+              :active="dashboardStore.selectedMainItem === item.id"
+              class="sidebar-item"
+              active-class="sidebar-item-active"
+            />
+          </template>
+
+          <v-list-item
+            v-for="subItem in item.subItems"
+            :key="subItem.id"
+            :title="subItem.title"
+            :prepend-icon="subItem.icon"
+            :value="subItem.id"
+            :active="dashboardStore.selectedSubItem === subItem.id"
+            @click="setSubItemWithParent(subItem.id, item.id)"
+            class="sidebar-sub-item"
+            active-class="sidebar-item-active"
+          />
+        </v-list-group>
+
+        <v-list-item
+          v-else
+          :value="item.id"
+          :title="expanded ? item.title : ''"
+          :prepend-icon="item.icon"
+          :active="dashboardStore.selectedMainItem === item.id"
+          @click="dashboardStore.setMainItem(item.id)"
+          rounded="lg"
+          class="mb-1 mx-2 sidebar-item"
+          active-class="sidebar-item-active"
+        />
+      </template>
     </v-list>
 
   </v-navigation-drawer>
@@ -38,6 +69,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useDashboardStore } from '@/stores/dashboardStore'
+import type { MenuId } from '@/types/menu'
 
 const dashboardStore = useDashboardStore()
 
@@ -56,6 +88,11 @@ const expanded = computed({
     emit('update:expanded', value)
   }
 })
+
+function setSubItemWithParent(subItemId: MenuId, parentId: MenuId) {
+  dashboardStore.setMainItem(parentId)
+  dashboardStore.setSubItem(subItemId)
+}
 </script>
 
 <style scoped>
@@ -71,5 +108,21 @@ const expanded = computed({
 .sidebar-item-active {
   background-color: rgba(255, 255, 255, 0.15) !important;
   color: white !important;
+}
+
+:deep(.v-list-group__items) {
+  padding-left: 1px !important;
+}
+
+:deep(.v-list-item__prepend) {
+  margin-right: 4px !important;
+}
+
+:deep(.v-list-item) {
+  padding-inline-start: 4px !important;
+}
+
+:deep(.sidebar-sub-item) {
+  padding-inline-start: 16px !important;
 }
 </style>

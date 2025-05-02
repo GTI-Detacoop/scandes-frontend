@@ -1,3 +1,5 @@
+import type { MenuId, MenuTitle } from '@/types/menu'
+import type { Component } from 'vue'
 export enum DocumentType {
   CARNET_IDENTIDAD = 'carnet-identidad',
   IPS = 'ips',
@@ -14,4 +16,11 @@ export enum DocumentType {
 
 export type DocumentMap = {
   [key in DocumentType]: File | undefined
+}
+export interface Step {
+  id: MenuId
+  title: MenuTitle
+  icon: string
+  documentType: DocumentType
+  component: Component
 }

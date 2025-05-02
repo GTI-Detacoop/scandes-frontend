@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2 class="text-h5 mb-4">{{ title }}</h2>
     <v-card class="pa-4">
       <slot>
         <v-card-text>{{ description }}</v-card-text>
