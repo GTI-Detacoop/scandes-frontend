@@ -23,11 +23,11 @@
 import { ref } from 'vue'
 import { useCreditAssessmentStore } from '@/stores/creditAssessmentStore'
 import DownloadDocumentsWarningDialog from './DownloadDocumentsWarningDialog.vue'
-import { combineFilesIntoPDF, downloadPDF } from '@/utils/pdfUtils'
+import { PDFCombiner, downloadPDF } from '@/utils/pdfUtils'
 
 const creditAssessmentStore = useCreditAssessmentStore()
 const showWarningDialog = ref(false)
-
+const pdfCombiner = new PDFCombiner()
 
 
 const showDownloadDialog = () => {
@@ -47,7 +47,7 @@ const downloadDocuments = async () => {
       throw new Error('No hay documentos disponibles para descargar')
     }
 
-    const combinedPDF = await combineFilesIntoPDF(creditAssessmentStore.availableDocs)
+    const combinedPDF = await pdfCombiner.combine(creditAssessmentStore.availableDocs)
 
     downloadPDF(combinedPDF, 'documentos-evaluacion-credito.pdf')
   } catch (error) {
