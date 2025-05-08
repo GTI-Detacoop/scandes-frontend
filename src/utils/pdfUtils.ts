@@ -16,7 +16,7 @@ export class PDFCombiner {
       if (fileData.file.type === 'application/pdf') {
         await this.addPDFContent(pdfDoc, arrayBuffer)
       } else if (fileData.file.type.startsWith('image/')) {
-        await this.addImageContent(pdfDoc, arrayBuffer, fileData.file.type)
+        await this.addImageContent(pdfDoc, arrayBuffer)
       } else {
         throw new Error(`Unsupported file type: ${fileData.file.type}`)
       }
@@ -43,7 +43,7 @@ export class PDFCombiner {
     copiedPages.forEach(page => pdfDoc.addPage(page))
   }
 
-  private async addImageContent(pdfDoc: PDFDocument, buffer: ArrayBuffer, mimeType: string) {
+  private async addImageContent(pdfDoc: PDFDocument, buffer: ArrayBuffer) {
     const image = await pdfDoc.embedJpg(buffer) // use embedPng if needed
     const page = pdfDoc.addPage()
     const { width: pageWidth, height: pageHeight } = page.getSize()
