@@ -9,6 +9,6 @@ COPY package*.json ./
 RUN rm -rf node_modules
 RUN npm install
 
-EXPOSE 3000
+EXPOSE 80
 
-CMD ["npm", "run", "dev", "--", "--port", "3000", "--host", "0.0.0.0"]
+CMD ["npm", "run", "dev", "--", "--port", "80", "--host", "0.0.0.0"]
