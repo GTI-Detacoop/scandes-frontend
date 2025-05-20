@@ -18,4 +18,9 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  server: {
+    allowedHosts: [
+      'ca-finanzasmvp-bff-sandbox.blackrock-f5f3f2c9.eastus2.azurecontainerapps.io'
+    ]
+  }
 })
