@@ -1,16 +1,30 @@
 version: '3.8'
 
 services:
-  vue-dev:
+  # Servicio de desarrollo
+  frontend-dev:
     build:
       context: .
-      dockerfile: Dockerfile
-    container_name: vue-app-dev
+      dockerfile: Dockerfile.dev
+    container_name: scandes-frontend-dev
     volumes:
       - ./:/app
       - /app/node_modules
     ports:
-      - '80:80'
+      - '5173:5173'
     environment:
       - NODE_ENV=development
+    command: npm run dev -- --host 0.0.0.0
+    restart: unless-stopped
+
+  # Servicio de producción
+  frontend-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scandes-frontend-prod
+    ports:
+      - '80:80'
+    environment:
+      - NODE_ENV=production
     restart: unless-stopped
