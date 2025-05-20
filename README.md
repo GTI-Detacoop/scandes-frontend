@@ -2,6 +2,67 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
+## Docker Setup
+
+### Prerequisites
+
+- Docker
+- Docker Compose
+
+### Running with Docker Compose
+
+The application can be run in two modes: development and production.
+
+#### Development Mode
+
+Development mode includes hot-reload and other development features:
+
+```sh
+# Build and start the development container
+docker compose up frontend-dev
+
+# Run in background
+docker compose up -d frontend-dev
+
+# View logs
+docker compose logs -f frontend-dev
+```
+
+The development server will be available at `http://localhost:5173`
+
+#### Production Mode
+
+Production mode uses Nginx to serve the optimized build:
+
+```sh
+# Build and start the production container
+docker compose up frontend-prod
+
+# Run in background
+docker compose up -d frontend-prod
+
+# View logs
+docker compose logs -f frontend-prod
+```
+
+The production server will be available at `http://localhost:80`
+
+#### Additional Docker Commands
+
+```sh
+# Stop containers
+docker compose down
+
+# Rebuild containers (needed after dependency changes)
+docker compose build
+
+# Remove all containers and volumes
+docker compose down -v
+
+# View container status
+docker compose ps
+```
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
