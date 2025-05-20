@@ -19,8 +19,7 @@ export default defineConfig({
     },
   },
   server: {
-    allowedHosts: [
-      'ca-finanzasmvp-bff-sandbox.blackrock-f5f3f2c9.eastus2.azurecontainerapps.io'
-    ]
+    host: true,
+    cors: true
   }
 })
