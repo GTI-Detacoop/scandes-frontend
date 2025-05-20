@@ -4,8 +4,6 @@ on:
   pull_request:
     types: [closed]
     branches: [main]
-    paths:
-      - 'applications/bff-app/**'
 
 env:
   ACR: ${{ secrets.ACR_LOGIN_SERVER }}
