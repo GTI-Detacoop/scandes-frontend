@@ -3,7 +3,7 @@ import { MenuId } from '@/types/menu'
 
 export const defaultDocumentsNeeded: MenuId[] = [
   MenuId.CARNET_IDENTIDAD,
-  MenuId.IPS,
+  MenuId.LIQUIDACIONES,
   MenuId.VIGENCIA_CEDULA,
   MenuId.INFORMES_COMERCIALES,
   MenuId.LEY_REEMPENDIMIENTO,

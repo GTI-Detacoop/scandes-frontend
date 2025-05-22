@@ -2,7 +2,7 @@ import type { MenuId, MenuTitle } from '@/types/menu'
 import type { Component } from 'vue'
 export enum DocumentType {
   CARNET_IDENTIDAD = 'carnet-identidad',
-  IPS = 'ips',
+  LIQUIDACIONES = 'liquidaciones',
   ACLARACION_DEUDA = 'aclaracion-deuda',
   CERTIFICADO_DEUDA = 'certificado-deuda',
   INFORMES_COMERCIALES = 'informes-comerciales',
@@ -15,7 +15,8 @@ export enum DocumentType {
   CARNET_MEDICINA_CURATIVA = 'carnet-medicina-curativa',
   CERTIFICADO_SALDO_DE_FONDA = 'certificado-saldo-de-fonda',
   CERTIFICADO_DE_NACIMIENTO = 'certificado-de-nacimiento',
-  CERTIFICADO_DE_MATRIMONIO = 'certificado-de-matrimonio'
+  CERTIFICADO_DE_MATRIMONIO = 'certificado-de-matrimonio',
+  POLIZA = 'poliza'
 }
 
 export type DocumentMap = {

@@ -1,11 +1,11 @@
 import type { MenuId } from "./menu"
 
 export enum ProductName {
-  DXP_IPS = 'Dxp Ips',
-  DXP_DIPRECA = 'Dxp Dipreca',
-  DXP_CAPREDENA = 'Dxp Capredena',
-  DXP_AFP = 'Dxp Afp',
-  DXP_SEGURO = 'Dxp Seguro',
+  DXP_IPS = 'DXP IPS',
+  DXP_DIPRECA = 'DXP DIPRECA',
+  DXP_CAPREDENA = 'DXP CAPREDENA',
+  DXP_AFP = 'DXP AFP',
+  DXP_SEGURO = 'DXP SEGURO',
 }
 
 export enum SubProductName {

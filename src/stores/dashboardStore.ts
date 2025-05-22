@@ -32,8 +32,8 @@ export const useDashboardStore = defineStore('dashboard', () => {
               component: markRaw(CreditAssessmentComponent)
             },
             {
-              id: MenuId.IPS,
-              title: MenuTitle.IPS,
+              id: MenuId.LIQUIDACIONES,
+              title: MenuTitle.LIQUIDACIONES,
               icon: 'mdi-hospital-box',
               component: markRaw(CreditAssessmentComponent)
             },
@@ -113,6 +113,12 @@ export const useDashboardStore = defineStore('dashboard', () => {
               id: MenuId.CERTIFICADO_DE_MATRIMONIO,
               title: MenuTitle.CERTIFICADO_DE_MATRIMONIO,
               icon: 'mdi-ring',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.POLIZA,
+              title: MenuTitle.POLIZA,
+              icon: 'mdi-shield-check',
               component: markRaw(CreditAssessmentComponent)
             }
           ]
