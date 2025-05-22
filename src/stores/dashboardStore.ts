@@ -90,6 +90,30 @@ export const useDashboardStore = defineStore('dashboard', () => {
               title: MenuTitle.VALIDACION_PREVISION,
               icon: 'mdi-medical-bag',
               component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.CARNET_MEDICINA_CURATIVA,
+              title: MenuTitle.CARNET_MEDICINA_CURATIVA,
+              icon: 'mdi-medical-bag',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.CERTIFICADO_SALDO_DE_FONDA,
+              title: MenuTitle.CERTIFICADO_SALDO_DE_FONDA,
+              icon: 'mdi-cash-check',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.CERTIFICADO_DE_NACIMIENTO,
+              title: MenuTitle.CERTIFICADO_DE_NACIMIENTO,
+              icon: 'mdi-baby',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.CERTIFICADO_DE_MATRIMONIO,
+              title: MenuTitle.CERTIFICADO_DE_MATRIMONIO,
+              icon: 'mdi-ring',
+              component: markRaw(CreditAssessmentComponent)
             }
           ]
         },

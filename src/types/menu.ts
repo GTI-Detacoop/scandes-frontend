@@ -22,6 +22,7 @@ export enum MenuTitle {
   CERTIFICADO_SALDO_DE_FONDA = 'Certificado Saldo de Fonda',
   CERTIFICADO_DE_MATRIMONIO = 'Certificado de Matrimonio',
   CERTIFICADO_DE_NACIMIENTO = 'Certificado de Nacimiento',
+  POLIZA = 'Póliza',
 }
 
 export enum MenuId {
@@ -44,7 +45,7 @@ export enum MenuId {
   CERTIFICADO_SALDO_DE_FONDA = 'certificado-saldo-de-fonda',
   CERTIFICADO_DE_NACIMIENTO = 'certificado-de-nacimiento',
   CERTIFICADO_DE_MATRIMONIO = 'certificado-de-matrimonio',
-
+  POLIZA = 'poliza',
   // Main
   OBTENER_IPS = 'obtener-ips',
   HISTORIAL = 'historial',

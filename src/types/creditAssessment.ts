@@ -11,7 +11,11 @@ export enum DocumentType {
   PREEVALUACION_CREDITO = 'preevaluacion-credito',
   VIGENCIA_CEDULA = 'vigencia-cedula',
   NEITCOM = 'neitcom',
-  VALIDACION_PREVISION = 'validacion-prevision'
+  VALIDACION_PREVISION = 'validacion-prevision',
+  CARNET_MEDICINA_CURATIVA = 'carnet-medicina-curativa',
+  CERTIFICADO_SALDO_DE_FONDA = 'certificado-saldo-de-fonda',
+  CERTIFICADO_DE_NACIMIENTO = 'certificado-de-nacimiento',
+  CERTIFICADO_DE_MATRIMONIO = 'certificado-de-matrimonio'
 }
 
 export type DocumentMap = {

@@ -13,6 +13,10 @@ import PreevaluacionCreditoComponent from '@/components/dashboard/content/credit
 import VigenciaCedulaComponent from '@/components/dashboard/content/credit-assessment/VigenciaCedulaComponent.vue'
 import NeitcomComponent from '@/components/dashboard/content/credit-assessment/NeitcomComponent.vue'
 import ValidacionPrevisionComponent from '@/components/dashboard/content/credit-assessment/ValidacionPrevisionComponent.vue'
+import CarnetMedicinaCurativaComponent from '@/components/dashboard/content/credit-assessment/CarnetMedicinaCurativaComponent.vue'
+import CertificadoSaldoDeFondaComponent from '@/components/dashboard/content/credit-assessment/CertificadoSaldoDeFondaComponent.vue'
+import CertificadoDeNacimientoComponent from '@/components/dashboard/content/credit-assessment/CertificadoDeNacimientoComponent.vue'
+import CertificadoDeMatrimonioComponent from '@/components/dashboard/content/credit-assessment/CertificadoDeMatrimonioComponent.vue'
 
 
 export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
@@ -29,7 +33,11 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
       { id: MenuId.PREEVALUACION_CREDITO, title: MenuTitle.PREEVALUACION_CREDITO, icon: 'mdi-file-document-edit', component: markRaw(PreevaluacionCreditoComponent), documentType: DocumentType.PREEVALUACION_CREDITO },
       { id: MenuId.VIGENCIA_CEDULA, title: MenuTitle.VIGENCIA_CEDULA, icon: 'mdi-card-account-details-outline', component: markRaw(VigenciaCedulaComponent), documentType: DocumentType.VIGENCIA_CEDULA },
       { id: MenuId.NEITCOM, title: MenuTitle.NEITCOM, icon: 'mdi-database-search', component: markRaw(NeitcomComponent), documentType: DocumentType.NEITCOM },
-      { id: MenuId.VALIDACION_PREVISION, title: MenuTitle.VALIDACION_PREVISION, icon: 'mdi-shield-check', component: markRaw(ValidacionPrevisionComponent), documentType: DocumentType.VALIDACION_PREVISION }
+      { id: MenuId.VALIDACION_PREVISION, title: MenuTitle.VALIDACION_PREVISION, icon: 'mdi-shield-check', component: markRaw(ValidacionPrevisionComponent), documentType: DocumentType.VALIDACION_PREVISION },
+      { id: MenuId.CARNET_MEDICINA_CURATIVA, title: MenuTitle.CARNET_MEDICINA_CURATIVA, icon: 'mdi-medical-bag', component: markRaw(CarnetMedicinaCurativaComponent), documentType: DocumentType.CARNET_MEDICINA_CURATIVA },
+      { id: MenuId.CERTIFICADO_SALDO_DE_FONDA, title: MenuTitle.CERTIFICADO_SALDO_DE_FONDA, icon: 'mdi-cash-check', component: markRaw(CertificadoSaldoDeFondaComponent), documentType: DocumentType.CERTIFICADO_SALDO_DE_FONDA },
+      { id: MenuId.CERTIFICADO_DE_NACIMIENTO, title: MenuTitle.CERTIFICADO_DE_NACIMIENTO, icon: 'mdi-baby', component: markRaw(CertificadoDeNacimientoComponent), documentType: DocumentType.CERTIFICADO_DE_NACIMIENTO },
+      { id: MenuId.CERTIFICADO_DE_MATRIMONIO, title: MenuTitle.CERTIFICADO_DE_MATRIMONIO, icon: 'mdi-ring', component: markRaw(CertificadoDeMatrimonioComponent), documentType: DocumentType.CERTIFICADO_DE_MATRIMONIO }
     ]
   )
 
@@ -45,7 +53,11 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
     [DocumentType.PREEVALUACION_CREDITO]: undefined,
     [DocumentType.VIGENCIA_CEDULA]: undefined,
     [DocumentType.NEITCOM]: undefined,
-    [DocumentType.VALIDACION_PREVISION]: undefined
+    [DocumentType.VALIDACION_PREVISION]: undefined,
+    [DocumentType.CARNET_MEDICINA_CURATIVA]: undefined,
+    [DocumentType.CERTIFICADO_SALDO_DE_FONDA]: undefined,
+    [DocumentType.CERTIFICADO_DE_NACIMIENTO]: undefined,
+    [DocumentType.CERTIFICADO_DE_MATRIMONIO]: undefined
   })
 
   function setDocument(type: DocumentType, file: File | undefined) {
@@ -73,6 +85,10 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
   const vigenciaCedula = computed(() => documents.value[DocumentType.VIGENCIA_CEDULA])
   const neitcom = computed(() => documents.value[DocumentType.NEITCOM])
   const validacionPrevision = computed(() => documents.value[DocumentType.VALIDACION_PREVISION])
+  const carnetMedicinaCurativa = computed(() => documents.value[DocumentType.CARNET_MEDICINA_CURATIVA])
+  const certificadoSaldoDeFonda = computed(() => documents.value[DocumentType.CERTIFICADO_SALDO_DE_FONDA])
+  const certificadoDeNacimiento = computed(() => documents.value[DocumentType.CERTIFICADO_DE_NACIMIENTO])
+  const certificadoDeMatrimonio = computed(() => documents.value[DocumentType.CERTIFICADO_DE_MATRIMONIO])
 
 
   const hasAnyDocuments = computed(() => {
@@ -119,6 +135,10 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
     vigenciaCedula,
     neitcom,
     validacionPrevision,
+    carnetMedicinaCurativa,
+    certificadoSaldoDeFonda,
+    certificadoDeNacimiento,
+    certificadoDeMatrimonio,
     hasAnyDocuments,
     missingDocuments,
     availableDocs,
