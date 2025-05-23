@@ -1,11 +1,19 @@
 <template>
   <div class="credit-assessment-stepper">
-    <DownloadDocumentsButton />
+    <v-row>
+      <v-col cols="12" md="6">
+        <ProductSelector />
+      </v-col>
+      <v-col cols="12" md="6" class="d-flex justify-end">
+        <DownloadDocumentsButton />
+      </v-col>
+    </v-row>
+    <v-divider />
 
     <v-card class="stepper-header mb-4">
       <v-row class="pa-2">
         <v-col
-          v-for="(step, index) in steps"
+          v-for="(step, index) in creditAssessmentStore.steps"
           :key="step.id"
           cols="12"
           sm="6"
@@ -42,7 +50,7 @@
     <!-- Contenido del stepper -->
     <v-window v-model="currentStep" class="stepper-window">
       <v-window-item
-        v-for="(step, index) in steps"
+        v-for="(step, index) in creditAssessmentStore.steps"
         :key="step.id"
         :value="index + 1"
       >
@@ -66,7 +74,7 @@
       <v-spacer v-else />
 
       <v-btn
-        v-if="currentStep < steps.length"
+        v-if="currentStep < creditAssessmentStore.steps.length"
         color="primary"
         @click="goToNextStep"
         class="navigation-btn"
@@ -83,15 +91,15 @@ import { ref, watch } from 'vue'
 import { useDashboardStore } from '@/stores/dashboardStore'
 import { useCreditAssessmentStore } from '@/stores/creditAssessmentStore'
 import DownloadDocumentsButton from './DownloadDocumentsButton.vue'
+import ProductSelector from './ProductSelector.vue'
 import { MenuId } from '@/types/menu'
 
 const dashboardStore = useDashboardStore()
 const creditAssessmentStore = useCreditAssessmentStore()
-const steps = creditAssessmentStore.steps
 const currentStep = ref(1)
 
 const isStepCompleted = (step: number) => {
-  const stepData = steps[step - 1]
+  const stepData = creditAssessmentStore.steps[step - 1]
   if (!stepData) return false
   return !!creditAssessmentStore.getDocument(stepData.documentType)
 }
@@ -103,7 +111,7 @@ const getIconColor = (step: number) => {
 }
 
 const goToStep = (step: number) => {
-  if (step >= 1 && step <= steps.length) {
+  if (step >= 1 && step <= creditAssessmentStore.steps.length) {
     currentStep.value = step
   }
 }
@@ -115,22 +123,29 @@ const goToPreviousStep = () => {
 }
 
 const goToNextStep = () => {
-  if (currentStep.value < steps.length) {
+  if (currentStep.value < creditAssessmentStore.steps.length) {
     currentStep.value++
   }
 }
 
 watch(() => dashboardStore.selectedSubItem, (newSubItem) => {
-  const stepIndex = steps.findIndex(step => step.id === newSubItem)
+  const stepIndex = creditAssessmentStore.steps.findIndex(step => step.id === newSubItem)
   if (stepIndex !== -1) {
     currentStep.value = stepIndex + 1
   }
 })
 
 watch(currentStep, (newStep) => {
-  const step = steps[newStep - 1]
+  const step = creditAssessmentStore.steps[newStep - 1]
   if (step) {
     dashboardStore.setSubItem(step.id as MenuId)
+  }
+})
+
+// Reset current step when steps change
+watch(() => creditAssessmentStore.steps.length, () => {
+  if (currentStep.value > creditAssessmentStore.steps.length) {
+    currentStep.value = 1
   }
 })
 </script>
