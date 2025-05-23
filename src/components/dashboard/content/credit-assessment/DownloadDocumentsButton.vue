@@ -15,6 +15,7 @@
   <DownloadDocumentsWarningDialog
     v-model="showWarningDialog"
     :missing-documents="creditAssessmentStore.missingDocuments"
+    :optional-missing-documents="creditAssessmentStore.optionalMissingDocuments"
     @confirm="downloadDocuments"
   />
 </template>

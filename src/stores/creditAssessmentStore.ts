@@ -25,7 +25,7 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
   const productStore = useProductStore()
 
   const allSteps = ref<Step[]>([
-    { id: MenuId.LIQUIDACIONES, title: MenuTitle.LIQUIDACIONES, icon: 'mdi-hospital-box', component: markRaw(LiquidacionesComponent), documentType: DocumentType.LIQUIDACIONES },
+    { id: MenuId.LIQUIDACIONES, title: MenuTitle.LIQUIDACIONES, icon: 'mdi-file-document-multiple', component: markRaw(LiquidacionesComponent), documentType: DocumentType.LIQUIDACIONES },
     { id: MenuId.CARNET_IDENTIDAD , title: MenuTitle.CARNET_IDENTIDAD, icon: 'mdi-card-account-details', component:  markRaw(CarnetIdentidadComponent), documentType: DocumentType.CARNET_IDENTIDAD },
     { id: MenuId.INFORMES_COMERCIALES, title: MenuTitle.INFORMES_COMERCIALES, icon: 'mdi-chart-box', component: markRaw(InformesComercialesComponent), documentType: DocumentType.INFORMES_COMERCIALES },
     { id: MenuId.VALIDACION_PREVISION, title: MenuTitle.VALIDACION_PREVISION, icon: 'mdi-shield-check', component: markRaw(ValidacionPrevisionComponent), documentType: DocumentType.VALIDACION_PREVISION },
@@ -114,6 +114,21 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
       }))
   })
 
+  const optionalMissingDocuments = computed(() => {
+    const requiredDocs = productStore.selectedSubProduct?.optionalDocuments || []
+    return steps.value
+      .filter(step => {
+        const isRequired = requiredDocs.includes(step.id)
+        return isRequired && !getDocument(step.documentType)
+      })
+      .map(step => ({
+        id: step.id,
+        title: step.title,
+        icon: step.icon
+      }))
+  })
+
+
   const availableDocs = computed(() => {
     return steps.value
     .filter(step => {
@@ -196,6 +211,7 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
     poliza,
     hasAnyDocuments,
     missingDocuments,
+    optionalMissingDocuments,
     availableDocs,
 
     // Actions
