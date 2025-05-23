@@ -12,6 +12,7 @@ export const useProductStore = defineStore('product', () => {
 
   function setSelectedProduct(product: Product) {
     selectedProduct.value = product
+    _updateSubProduct()
   }
 
   function setSelectedSubProduct(subProduct: SubProduct) {
@@ -36,6 +37,15 @@ export const useProductStore = defineStore('product', () => {
 
   function getDocumentsNeeded() {
     return selectedSubProduct.value?.documentsNeeded
+  }
+
+  function _updateSubProduct() {
+    const potentialSubProduct = selectedProduct.value?.subProducts.find(subProduct => subProduct.name === selectedSubProduct.value?.name)
+    if (potentialSubProduct) {
+      selectedSubProduct.value = potentialSubProduct
+    } else {
+      selectedSubProduct.value = selectedProduct.value?.subProducts[0]
+    }
   }
 
   return {

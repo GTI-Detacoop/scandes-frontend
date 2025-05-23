@@ -42,6 +42,7 @@ const subProducts = computed(() => {
 const handleProductChange = () => {
   if (selectedProduct.value) {
     productStore.setSelectedProduct(selectedProduct.value)
+    selectedSubProduct.value = productStore.getSelectedSubProduct()
   }
 }
 

@@ -3,7 +3,6 @@ import { ref, computed, markRaw, watch } from 'vue'
 import { DocumentType, type DocumentMap, type Step } from '@/types/creditAssessment'
 import { MenuId, MenuTitle } from '@/types/menu'
 import { useProductStore } from '@/stores/productStore'
-import type { SubProduct } from '@/types/product'
 import CarnetIdentidadComponent from '@/components/dashboard/content/credit-assessment/CarnetIdentidadComponent.vue'
 import AclaracionDeudaComponent from '@/components/dashboard/content/credit-assessment/AclaracionDeudaComponent.vue'
 import CertificadoDeudaComponent from '@/components/dashboard/content/credit-assessment/CertificadoDeudaComponent.vue'
@@ -140,7 +139,6 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
       file: getDocument(step.documentType) as File
     }))
   })
-
   // Watch for changes in the selected product/subproduct and update steps accordingly
   watch(
     [
@@ -148,8 +146,6 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
       () => productStore.selectedSubProduct
     ],
     ([product, subProduct]) => {
-      console.log('product', product)
-      console.log('subProduct', subProduct)
       if (!product) {
         steps.value = [...allSteps.value]
         return
@@ -161,25 +157,10 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
         // If subproduct is selected, show its specific documents
         if (subProduct.documentsNeeded) {
           subProduct.documentsNeeded.forEach((doc: MenuId) => requiredDocs.add(doc))
-          console.log('requiredDocs', requiredDocs)
         }
         if (subProduct.optionalDocuments) {
           subProduct.optionalDocuments.forEach((doc: MenuId) => requiredDocs.add(doc))
         }
-      } else {
-        // If only product is selected, show common documents across all its subproducts
-        product.subProducts.forEach((sp: SubProduct, index: number) => {
-          const docs = new Set([...(sp.documentsNeeded || []), ...(sp.optionalDocuments || [])])
-          if (index === 0) {
-            docs.forEach(doc => requiredDocs.add(doc))
-          } else {
-            for (const doc of [...requiredDocs]) {
-              if (!docs.has(doc)) {
-                requiredDocs.delete(doc)
-              }
-            }
-          }
-        })
       }
 
       steps.value = allSteps.value.filter(step => requiredDocs.has(step.id))
