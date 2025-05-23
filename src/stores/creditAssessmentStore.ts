@@ -78,6 +78,31 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
     })
   }
 
+  function getStep(id: MenuId): Step | undefined {
+    return steps.value.find(step => step.id === id)
+  }
+
+  const getDocumentChecklist = (isOptional: boolean) => {
+    const checklist: { title: string; isPresent: boolean }[] = []
+    const documentsToCheck = isOptional
+      ? productStore.selectedSubProduct?.optionalDocuments
+      : productStore.selectedSubProduct?.documentsNeeded
+
+    if (!documentsToCheck) return checklist
+
+    documentsToCheck.forEach(documentId => {
+      const step = getStep(documentId)
+      if (step) {
+        checklist.push({
+          title: step.title,
+          isPresent: !!getDocument(step.documentType)
+        })
+      }
+    })
+
+    return checklist
+  }
+
   const carnetIdentidad = computed(() => documents.value[DocumentType.CARNET_IDENTIDAD])
   const liquidaciones = computed(() => documents.value[DocumentType.LIQUIDACIONES])
   const aclaracionDeuda = computed(() => documents.value[DocumentType.ACLARACION_DEUDA])
@@ -98,6 +123,9 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
   const hasAnyDocuments = computed(() => {
     return steps.value.some(step => getDocument(step.documentType))
   })
+
+  const requiredDocumentsChecklist = computed(() => getDocumentChecklist(false))
+  const optionalDocumentsChecklist = computed(() => getDocumentChecklist(true))
 
   const missingDocuments = computed(() => {
     const requiredDocs = productStore.selectedSubProduct?.documentsNeeded || []
@@ -194,7 +222,8 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
     missingDocuments,
     optionalMissingDocuments,
     availableDocs,
-
+    requiredDocumentsChecklist,
+    optionalDocumentsChecklist,
     // Actions
     setDocument,
     getDocument,
