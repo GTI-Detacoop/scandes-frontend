@@ -60,7 +60,6 @@ const downloadDocuments = async () => {
 .download-actions {
   padding: 1rem;
   background-color: transparent;
-  border-bottom: 1px solid rgba(var(--v-border-color), 0.12);
 }
 
 .download-btn {

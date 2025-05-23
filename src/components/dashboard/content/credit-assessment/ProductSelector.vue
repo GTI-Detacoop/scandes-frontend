@@ -54,7 +54,7 @@ const handleSubProductChange = () => {
 
 <style scoped>
 .product-selector {
-  padding: 1rem;
+  padding-top: 2rem;
   background-color: transparent;
 }
 </style>

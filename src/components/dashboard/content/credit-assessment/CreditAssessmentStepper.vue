@@ -1,13 +1,14 @@
 <template>
   <div class="credit-assessment-stepper">
-    <v-row class="pa-4">
-      <v-col cols="12" md="8">
+    <v-row>
+      <v-col cols="12" md="6">
         <ProductSelector />
       </v-col>
-      <v-col cols="12" md="4" class="d-flex justify-end">
+      <v-col cols="12" md="6" class="d-flex justify-end">
         <DownloadDocumentsButton />
       </v-col>
     </v-row>
+    <v-divider />
 
     <v-card class="stepper-header mb-4">
       <v-row class="pa-2">

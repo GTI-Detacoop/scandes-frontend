@@ -5,7 +5,6 @@ import { MenuId, MenuTitle } from '@/types/menu'
 import { useProductStore } from '@/stores/productStore'
 import type { SubProduct } from '@/types/product'
 import CarnetIdentidadComponent from '@/components/dashboard/content/credit-assessment/CarnetIdentidadComponent.vue'
-import IPSComponent from '@/components/dashboard/content/credit-assessment/IPSComponent.vue'
 import AclaracionDeudaComponent from '@/components/dashboard/content/credit-assessment/AclaracionDeudaComponent.vue'
 import CertificadoDeudaComponent from '@/components/dashboard/content/credit-assessment/CertificadoDeudaComponent.vue'
 import InformesComercialesComponent from '@/components/dashboard/content/credit-assessment/InformesComercialesComponent.vue'
@@ -20,12 +19,13 @@ import CertificadoSaldoDeFondaComponent from '@/components/dashboard/content/cre
 import CertificadoDeNacimientoComponent from '@/components/dashboard/content/credit-assessment/CertificadoDeNacimientoComponent.vue'
 import CertificadoDeMatrimonioComponent from '@/components/dashboard/content/credit-assessment/CertificadoDeMatrimonioComponent.vue'
 import PolizaComponent from '@/components/dashboard/content/credit-assessment/PolizaComponent.vue'
+import LiquidacionesComponent from '@/components/dashboard/content/credit-assessment/LiquidacionesComponent.vue'
 
 export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
   const productStore = useProductStore()
 
   const allSteps = ref<Step[]>([
-    { id: MenuId.LIQUIDACIONES, title: MenuTitle.LIQUIDACIONES, icon: 'mdi-hospital-box', component: markRaw(IPSComponent), documentType: DocumentType.LIQUIDACIONES },
+    { id: MenuId.LIQUIDACIONES, title: MenuTitle.LIQUIDACIONES, icon: 'mdi-hospital-box', component: markRaw(LiquidacionesComponent), documentType: DocumentType.LIQUIDACIONES },
     { id: MenuId.CARNET_IDENTIDAD , title: MenuTitle.CARNET_IDENTIDAD, icon: 'mdi-card-account-details', component:  markRaw(CarnetIdentidadComponent), documentType: DocumentType.CARNET_IDENTIDAD },
     { id: MenuId.INFORMES_COMERCIALES, title: MenuTitle.INFORMES_COMERCIALES, icon: 'mdi-chart-box', component: markRaw(InformesComercialesComponent), documentType: DocumentType.INFORMES_COMERCIALES },
     { id: MenuId.VALIDACION_PREVISION, title: MenuTitle.VALIDACION_PREVISION, icon: 'mdi-shield-check', component: markRaw(ValidacionPrevisionComponent), documentType: DocumentType.VALIDACION_PREVISION },
@@ -95,6 +95,7 @@ export const useCreditAssessmentStore = defineStore('creditAssessment', () => {
   const certificadoDeNacimiento = computed(() => documents.value[DocumentType.CERTIFICADO_DE_NACIMIENTO])
   const certificadoDeMatrimonio = computed(() => documents.value[DocumentType.CERTIFICADO_DE_MATRIMONIO])
   const poliza = computed(() => documents.value[DocumentType.POLIZA])
+
   const hasAnyDocuments = computed(() => {
     return steps.value.some(step => getDocument(step.documentType))
   })

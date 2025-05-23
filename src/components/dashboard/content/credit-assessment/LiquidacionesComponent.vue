@@ -1,11 +1,11 @@
 <template>
   <DashboardContentBase
-    title="IPS"
-    description="Evaluación de crédito por IPS"
+    title="Liquidaciones"
+    description="Liquidaciones"
   >
     <v-card-text>
       <p class="text-body-1 mb-6">
-        Esta sección permite verificar datos del cliente mediante consulta a IPS.
+        Esta sección permite verificar datos de las 3 últimas liquidaciones.
       </p>
 
       <v-form @submit.prevent="handleSubmit">
@@ -13,7 +13,7 @@
           <v-col cols="12">
             <div class="text-subtitle-1 mb-2">Documento de Aclaración de Deuda</div>
             <DropzoneComponent
-              :model-value="creditAssessmentStore.ips"
+              :model-value="creditAssessmentStore.liquidaciones"
               @update:model-value="handleFileUpdate"
               accept=".pdf,.jpg,.jpeg,.png"
               label="Subir documento"
@@ -27,13 +27,13 @@
               color="primary"
               type="submit"
               :loading="isSubmitting"
-              :disabled="!creditAssessmentStore.ips"
+              :disabled="!creditAssessmentStore.liquidaciones"
               class="mr-2"
             >
               Verificar
             </v-btn>
             <DownloadComponent
-              :file="creditAssessmentStore.ips"
+              :file="creditAssessmentStore.liquidaciones"
               label="Descargar PDF"
               color="secondary"
               class="ml-2"
@@ -65,7 +65,7 @@ const handleSubmit = async () => {
   try {
     // Simular una petición al backend
     await new Promise(resolve => setTimeout(resolve, 1000))
-    console.info('Documento enviado:', creditAssessmentStore.ips)
+    console.info('Documento enviado:', creditAssessmentStore.liquidaciones)
   } catch (error) {
     console.error('Error al enviar el documento:', error)
   } finally {
@@ -74,7 +74,7 @@ const handleSubmit = async () => {
 }
 
 const handleFileUpdate = (file: File | undefined) => {
-  creditAssessmentStore.setDocument(DocumentType.IPS, file)
+  creditAssessmentStore.setDocument(DocumentType.LIQUIDACIONES, file)
 }
 
 </script>
