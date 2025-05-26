@@ -1,4 +1,4 @@
-import { PDFDocument, rgb } from 'pdf-lib'
+import { PDFDocument, PDFPage, rgb, type Color } from 'pdf-lib'
 
 interface FileToCombine {
   title: string
@@ -39,6 +39,28 @@ export class PDFCombiner {
     return new Blob([pdfBytes], { type: 'application/pdf' })
   }
 
+  private async pageText(page: PDFPage, text: string, y: number,  x: number = 50, size: number = 12, color: Color = rgb(0, 0, 0)) {
+    page.drawText(text, {
+      x,
+      y,
+      size,
+      color
+    })
+  }
+
+  private async addCheckboxList(page: PDFPage, checklistDocs: DocumentStatus[], height: number, fontSize: number = 12, lineHeight: number = 20): Promise<number> {
+    for (const doc of checklistDocs) {
+      await this.pageText(page, '[', height, 50, fontSize, rgb(0, 0, 0))
+      if (doc.isPresent) {
+        await this.pageText(page, 'X', height, 53, fontSize, rgb(0, 0.5, 0))
+      }
+      await this.pageText(page, ']', height, 60, fontSize, rgb(0, 0, 0))
+      await this.pageText(page, doc.title, height, 70, fontSize, doc.isPresent ? rgb(0, 0, 0) : rgb(0.8, 0, 0))
+      height -= lineHeight
+    }
+    return height
+  }
+
   private async addSummaryPage(
     pdfDoc: PDFDocument,
     product: string,
@@ -51,120 +73,32 @@ export class PDFCombiner {
     let currentY = height - 50
 
     const titleSize = 16
-    const fontSize = 12
     const lineHeight = 20
 
-    page.drawText(`Producto: ${product}`, {
-      x: 50,
-      y: currentY,
-      size: titleSize,
-      color: rgb(0, 0, 0)
-    })
-
+    await this.pageText(page, `Producto: ${product}`, currentY, 50, titleSize)
     currentY -= lineHeight + 10
-    page.drawText(`Subproducto: ${subProduct}`, {
-      x: 50,
-      y: currentY,
-      size: titleSize,
-      color: rgb(0, 0, 0)
-    })
+
+    await this.pageText(page, `Subproducto: ${subProduct}`, currentY, 50, titleSize)
 
     currentY -= lineHeight * 2
-    page.drawText('Documentos Requeridos:', {
-      x: 50,
-      y: currentY,
-      size: titleSize,
-      color: rgb(0, 0, 0)
-    })
+    await this.pageText(page, 'Documentos Requeridos:', currentY, 50, titleSize)
 
     currentY -= lineHeight
-    for (const doc of requiredDocs) {
-      page.drawText('[', {
-        x: 50,
-        y: currentY,
-        size: fontSize,
-        color: rgb(0, 0, 0)
-      })
-
-      if (doc.isPresent) {
-        page.drawText('X', {
-          x: 53,
-          y: currentY,
-          size: fontSize,
-          color: rgb(0, 0.5, 0)
-        })
-      }
-
-      page.drawText(']', {
-        x: 60,
-        y: currentY,
-        size: fontSize,
-        color: rgb(0, 0, 0)
-      })
-
-      page.drawText(doc.title, {
-        x: 70,
-        y: currentY,
-        size: fontSize,
-        color: doc.isPresent ? rgb(0, 0, 0) : rgb(0.8, 0, 0)
-      })
-      currentY -= lineHeight
-    }
+    currentY = await this.addCheckboxList(page, requiredDocs, currentY)
 
     if (optionalDocs.length > 0) {
       currentY -= lineHeight
-      page.drawText('Documentos Opcionales:', {
-        x: 50,
-        y: currentY,
-        size: titleSize,
-        color: rgb(0, 0, 0)
-      })
+      await this.pageText(page, 'Documentos Opcionales:', currentY, 50, titleSize)
 
       currentY -= lineHeight
-      for (const doc of optionalDocs) {
-        page.drawText('[', {
-          x: 50,
-          y: currentY,
-          size: fontSize,
-          color: rgb(0, 0, 0)
-        })
-
-        if (doc.isPresent) {
-          page.drawText('X', {
-            x: 53,
-            y: currentY,
-            size: fontSize,
-            color: rgb(0, 0.5, 0)
-          })
-        }
-
-        page.drawText(']', {
-          x: 60,
-          y: currentY,
-          size: fontSize,
-          color: rgb(0, 0, 0)
-        })
-
-        page.drawText(doc.title, {
-          x: 70,
-          y: currentY,
-          size: fontSize,
-          color: doc.isPresent ? rgb(0, 0, 0) : rgb(0.5, 0.5, 0)
-        })
-        currentY -= lineHeight
-      }
+      await this.addCheckboxList(page, optionalDocs, currentY)
     }
   }
 
   private async addTitlePage(pdfDoc: PDFDocument, title: string) {
     const page = pdfDoc.addPage()
     const { height } = page.getSize()
-    page.drawText(title, {
-      x: 50,
-      y: height / 2,
-      size: 20,
-      color: rgb(0, 0, 0),
-    })
+    await this.pageText(page, title, height / 2, 50, 20, rgb(0, 0, 0))
   }
 
   private async addPDFContent(pdfDoc: PDFDocument, buffer: ArrayBuffer) {
