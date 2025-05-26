@@ -17,6 +17,19 @@
             :prepend-icon="missingDoc.icon"
           />
         </v-list>
+        <p class="text-body-1 mb-4" v-if="optionalMissingDocuments.length > 0">
+          Los siguientes documentos faltantes son opcionales:
+          </p>
+        <v-list>
+          <v-list-item
+            v-for="optionalMissingDoc in optionalMissingDocuments"
+            :key="optionalMissingDoc.id"
+            :title="optionalMissingDoc.title"
+            :prepend-icon="optionalMissingDoc.icon"
+            base-color="warning"
+          />
+
+        </v-list>
         <p class="text-body-2 mt-4">
           ¿Desea continuar con la descarga de los documentos disponibles?
         </p>
@@ -54,6 +67,7 @@ interface MissingDocument {
 defineProps<{
   modelValue: boolean
   missingDocuments: MissingDocument[]
+  optionalMissingDocuments: MissingDocument[]
 }>()
 
 defineEmits<{

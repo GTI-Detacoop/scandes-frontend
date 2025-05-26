@@ -32,8 +32,8 @@ export const useDashboardStore = defineStore('dashboard', () => {
               component: markRaw(CreditAssessmentComponent)
             },
             {
-              id: MenuId.IPS,
-              title: MenuTitle.IPS,
+              id: MenuId.LIQUIDACIONES,
+              title: MenuTitle.LIQUIDACIONES,
               icon: 'mdi-hospital-box',
               component: markRaw(CreditAssessmentComponent)
             },
@@ -89,6 +89,36 @@ export const useDashboardStore = defineStore('dashboard', () => {
               id: MenuId.VALIDACION_PREVISION,
               title: MenuTitle.VALIDACION_PREVISION,
               icon: 'mdi-medical-bag',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.CARNET_MEDICINA_CURATIVA,
+              title: MenuTitle.CARNET_MEDICINA_CURATIVA,
+              icon: 'mdi-medical-bag',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.CERTIFICADO_SALDO_DE_FONDA,
+              title: MenuTitle.CERTIFICADO_SALDO_DE_FONDA,
+              icon: 'mdi-cash-check',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.CERTIFICADO_DE_NACIMIENTO,
+              title: MenuTitle.CERTIFICADO_DE_NACIMIENTO,
+              icon: 'mdi-baby',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.CERTIFICADO_DE_MATRIMONIO,
+              title: MenuTitle.CERTIFICADO_DE_MATRIMONIO,
+              icon: 'mdi-ring',
+              component: markRaw(CreditAssessmentComponent)
+            },
+            {
+              id: MenuId.POLIZA,
+              title: MenuTitle.POLIZA,
+              icon: 'mdi-shield-check',
               component: markRaw(CreditAssessmentComponent)
             }
           ]

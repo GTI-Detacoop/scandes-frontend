@@ -1,19 +1,19 @@
 <template>
   <DashboardContentBase
-    title="IPS"
-    description="Evaluación de crédito por IPS"
+    title="Poliza de Seguro"
+    description="Evaluación de crédito por Carnet de Medicina Curativa"
   >
     <v-card-text>
       <p class="text-body-1 mb-6">
-        Esta sección permite verificar datos del cliente mediante consulta a IPS.
+        Esta sección permite verificar la poliza de seguro del cliente.
       </p>
 
       <v-form @submit.prevent="handleSubmit">
         <v-row>
           <v-col cols="12">
-            <div class="text-subtitle-1 mb-2">Documento de Aclaración de Deuda</div>
+            <div class="text-subtitle-1 mb-2">Poliza de Seguro</div>
             <DropzoneComponent
-              :model-value="creditAssessmentStore.ips"
+              :model-value="creditAssessmentStore.poliza"
               @update:model-value="handleFileUpdate"
               accept=".pdf,.jpg,.jpeg,.png"
               label="Subir documento"
@@ -27,13 +27,13 @@
               color="primary"
               type="submit"
               :loading="isSubmitting"
-              :disabled="!creditAssessmentStore.ips"
+              :disabled="!creditAssessmentStore.poliza"
               class="mr-2"
             >
               Verificar
             </v-btn>
             <DownloadComponent
-              :file="creditAssessmentStore.ips"
+              :file="creditAssessmentStore.poliza"
               label="Descargar PDF"
               color="secondary"
               class="ml-2"
@@ -42,14 +42,12 @@
         </v-row>
       </v-form>
     </v-card-text>
-
-
   </DashboardContentBase>
 </template>
 
 <script setup lang="ts">
-import DashboardContentBase from '../DashboardContentBase.vue'
 import { ref } from 'vue'
+import DashboardContentBase from '../DashboardContentBase.vue'
 import { useCreditAssessmentStore } from '@/stores/creditAssessmentStore'
 import DropzoneComponent from '@/components/common/DropzoneComponent.vue'
 import DownloadComponent from '@/components/common/DownloadComponent.vue'
@@ -58,14 +56,12 @@ import { DocumentType } from '@/types/creditAssessment'
 const creditAssessmentStore = useCreditAssessmentStore()
 const isSubmitting = ref(false)
 
-
-
 const handleSubmit = async () => {
   isSubmitting.value = true
   try {
     // Simular una petición al backend
     await new Promise(resolve => setTimeout(resolve, 1000))
-    console.info('Documento enviado:', creditAssessmentStore.ips)
+    console.info('Documento enviado:', creditAssessmentStore.poliza)
   } catch (error) {
     console.error('Error al enviar el documento:', error)
   } finally {
@@ -74,7 +70,6 @@ const handleSubmit = async () => {
 }
 
 const handleFileUpdate = (file: File | undefined) => {
-  creditAssessmentStore.setDocument(DocumentType.IPS, file)
+  creditAssessmentStore.setDocument(DocumentType.POLIZA, file)
 }
-
 </script>
