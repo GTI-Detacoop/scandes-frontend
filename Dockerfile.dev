@@ -1,12 +1,24 @@
 FROM node:20-slim
 
+# Create non-root user
+RUN groupadd -r appuser && useradd -r -g appuser -m appuser
+
 WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
 
+# Set ownership to non-root user
+RUN chown -R appuser:appuser /app
+
+# Switch to non-root user
+USER appuser
+
 # Install dependencies
-RUN npm install
+RUN npm install --ignore-scripts
+
+# Copy source code with correct ownership
+COPY --chown=appuser:appuser . .
 
 # Expose development port
 EXPOSE 5173
