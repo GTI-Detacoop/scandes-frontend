@@ -1,5 +1,5 @@
 # Build stage
-FROM node:20-slim as build
+FROM node:22-slim AS build
 
 # Create non-root user
 RUN groupadd -r appuser && useradd -r -g appuser -m appuser
