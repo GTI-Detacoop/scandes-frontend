@@ -5,7 +5,7 @@ export enum ProductName {
   DXP_DIPRECA = 'DXP DIPRECA',
   DXP_CAPREDENA = 'DXP CAPREDENA',
   DXP_AFP = 'DXP AFP',
-  DXP_SEGURO = 'DXP SEGURO',
+  DXP_SEGURO = 'DXP COMPAÑÍA DE SEGUROS',
 }
 
 export enum SubProductName {
